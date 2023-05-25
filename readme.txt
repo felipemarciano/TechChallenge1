@@ -1,0 +1,2 @@
+ Create Migration
+ dotnet ef migrations add init -c AppIdentityDbContext --project .\TechChallenge1.Infrastructure\TechChallenge1.Infrastructure.csproj --startup-project .\TechChallenge1.Api\TechChallenge1.Api.csproj --output-dir .\Identity\Migrations

@@ -1,0 +1,40 @@
+version: '3.9'
+
+services:
+  web:
+    build: ./TechChallenge1.Web
+    ports:
+      - "8000:80"
+    depends_on:
+      - api
+      - sqlserver
+    networks:
+      - app-network
+
+  api:
+    build: ./TechChallenge1.Api
+    ports:
+      - "8001:80"
+    depends_on:
+      - sqlserver
+    networks:
+      - app-network
+
+  sqlserver:
+    image: "mcr.microsoft.com/mssql/server:2019-latest"
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: "YourStrong!Passw0rd"
+      ACCEPT_EULA: "Y"
+    volumes:
+      - sql-data:/var/opt/mssql
+    networks:
+      - app-network
+
+volumes:
+  sql-data:
+
+networks:
+  app-network:
+    driver: bridge

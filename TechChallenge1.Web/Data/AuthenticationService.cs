@@ -14,8 +14,8 @@
             var result = await _httpClient.PostAsJsonAsync("api/account/login", new { username, password });
             result.EnsureSuccessStatusCode();
 
-            var jwtToken = await result.Content.ReadFromJsonAsync<RToken>();
-            return jwtToken.AccessToken;
+            var jwtToken = await result.Content.ReadFromJsonAsync<RToken>() ?? new();
+            return jwtToken.AccessToken ?? "";
         }
 
         private class RToken

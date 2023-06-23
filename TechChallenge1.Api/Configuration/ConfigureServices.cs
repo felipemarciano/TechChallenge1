@@ -19,7 +19,7 @@ namespace TechChallenge1.Api.Configuration
                     configuration.GetConnectionString("DefaultConnection")));
 
             // Add Identity
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<AppIdentityDbContext>()
                 .AddDefaultTokenProviders();
 

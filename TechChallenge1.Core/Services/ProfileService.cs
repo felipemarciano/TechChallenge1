@@ -15,18 +15,29 @@ namespace TechChallenge1.Core.Services
             _profileRepository = profileRepository;
         }
 
-        public async Task CreateProfileAsync(Guid applicationUserId, string userName, string pictureUri, string? biography, EGender gender)
+        public async Task CreateUpdateProfileAsync(Profile profile)
         {
-            var profileUserNameSpecification = new ProfileUserNameSpecification(userName, applicationUserId);
-            var profileDmp = await _profileRepository.CountAsync(profileUserNameSpecification);
-            if (profileDmp > 0)
+            //Check existing username
+            var profileUserNameExistingSpecification = new ProfileUserNameSpecification(profile.UserName, profile.ApplicationUserId);
+            var profileDuplicateCount = await _profileRepository.CountAsync(profileUserNameExistingSpecification);
+            if (profileDuplicateCount > 0)
             {
-                throw new DuplicateException($"User already exists {userName}");
+                throw new DuplicateException($"User already exists {profile.UserName}");
             }
 
-            var profile = new Profile(applicationUserId, userName, biography, pictureUri, gender);
+            var profileUserNameSpecification = new ProfileUserNameSpecification(profile.ApplicationUserId);
+            var profileExisting = await _profileRepository.FirstOrDefaultAsync(profileUserNameSpecification);
 
-            await _profileRepository.AddAsync(profile);
+            if (profileExisting != null)
+            {
+                profileExisting.ChangeProfile(profile.UserName, profile.Biography, profile.Gender);
+
+                await _profileRepository.UpdateAsync(profileExisting);
+            }
+            else
+            {
+                await _profileRepository.AddAsync(profile);
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -24,6 +25,30 @@ namespace TechChallenge1.Api.Controllers
             _configuration = configuration;
         }
 
+        [AllowAnonymous]
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] RegisterRequest model)
+        {
+            var user = new ApplicationUser { UserName = model?.Email, Email = model?.Email };
+            var result = await _userManager.CreateAsync(user, model?.Password!);
+            if (result.Succeeded)
+            {
+                return Ok();
+            }
+            else
+            {
+                var msgError = "";
+
+                foreach (var error in result.Errors)
+                {
+                    msgError += $" {error.Description}";
+                }
+
+                return BadRequest(msgError);
+            }
+        }
+
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest model)
         {

@@ -36,7 +36,7 @@ namespace TechChallenge1.Web.Configuration
 
         public override Task<AuthenticationState> GetAuthenticationStateAsync()
         {
-            var jwtToken = _httpContextAccessor.HttpContext.Request.Cookies["authToken"];
+            var jwtToken = _httpContextAccessor.HttpContext?.Request.Cookies["authToken"];
 
             if (jwtToken == null)
             {

@@ -1,8 +1,14 @@
 ﻿@inject NavigationManager NavigationManager
+@using TechChallenge1.Web.Data
+@inject ProfileService ProfileService
 
 @code {
-    protected override void OnInitialized()
+    private ProfileModel? ProfileModel;
+
+    protected override async Task OnInitializedAsync()
     {
-        NavigationManager.NavigateTo("/login");
+        ProfileModel = await ProfileService.Get();
+
+        NavigationManager.NavigateTo("/profile");
     }
 }

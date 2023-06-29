@@ -35,12 +35,13 @@ namespace TechChallenge1.Core.Entities
             AddDateUpdate();
         }
 
-        public void ChangeProfile(string userName, string biography)
+        public void ChangeProfile(string userName, string? biography, EGender gender)
         {
             Guard.Against.NullOrEmpty(userName, nameof(userName));
 
             UserName = userName;
             Biography = biography;
+            Gender = gender;
             AddDateUpdate();
         }
 

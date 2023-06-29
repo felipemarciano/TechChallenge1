@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Components.Authorization;
+using MudBlazor.Services;
 using TechChallenge1.Web.Configuration;
 using TechChallenge1.Web.Data;
 
@@ -34,6 +35,9 @@ builder.Services.AddAuthentication(options =>
     options.Cookie.Name = "auth_cookie";
 })
 .AddJwtBearer();
+
+builder.Services.AddMudServices();
+
 
 var app = builder.Build();
 

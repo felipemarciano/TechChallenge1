@@ -1,28 +1,39 @@
 ﻿@page "/"
 @attribute [Authorize]
-@inject AuthenticationStateProvider AuthenticationStateProvider
-
-<PageTitle>Index</PageTitle>
-
-<h1>Hello, world!</h1>
-
-@userName
-
-Welcome to your new app.
-
-<SurveyPrompt Title="How is Blazor working for you?" />
 
 
-@code{
-    private string userName;
-    protected override async Task OnInitializedAsync()
-    {
-        var authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        var user = authenticationState.User;
+<PageTitle>Home</PageTitle>
 
-        if (user.Identity.IsAuthenticated)
+<MudContainer Class="mt-4" MaxWidth="MaxWidth.Small">
+    <MudItem xs="12">
+        <MudText Typo="Typo.h6"> Under constrution... <MudIcon Icon="@Icons.Material.Filled.Construction"></MudIcon></MudText>
+        @for (int i = 0; i < 8; i++)
         {
-            userName = user.Claims.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.NameIdentifier).Value;
+            <MudCard Class="my-3">
+                <MudCardHeader>
+                    <CardHeaderAvatar>
+                        <MudSkeleton SkeletonType="SkeletonType.Circle" Animation="Animation.Wave" Height="40px" Width="40px" />
+                    </CardHeaderAvatar>
+                    <CardHeaderContent>
+                        <MudSkeleton Animation="Animation.Wave" Width="40%" />
+                        <MudSkeleton Animation="Animation.Wave" Width="60%" />
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudSkeleton SkeletonType="SkeletonType.Rectangle" Animation="Animation.Wave" Height="250px" />
+                <MudCardContent>
+                    <MudSkeleton Animation="Animation.Wave" />
+                </MudCardContent>
+                <MudCardActions>
+                    <MudSkeleton SkeletonType="SkeletonType.Circle" Animation="Animation.Wave" Height="30px" Width="30px" Class="ml-2 mb-2" />
+                    <MudSkeleton SkeletonType="SkeletonType.Circle" Animation="Animation.Wave" Height="30px" Width="30px" Class="ml-3 mb-2" />
+                </MudCardActions>
+            </MudCard>
         }
-    }
+
+    </MudItem>
+</MudContainer>
+
+
+@code {
+
 }

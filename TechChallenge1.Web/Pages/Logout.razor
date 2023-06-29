@@ -1,0 +1,49 @@
+﻿@page "/logout"
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
+
+<PageTitle>Logout</PageTitle>
+
+<MudContainer Class="mt-4 py-4" MaxWidth="MaxWidth.Medium">
+    <MudItem xs="12">
+        <MudProgressLinear Color="Color.Primary" Buffer="true" Value="@Value" BufferValue="@BufferValue" Class="my-7" />
+    </MudItem>
+</MudContainer>
+
+@code {
+    private bool _disposed;
+
+    public void Dispose() => _disposed = true;
+
+    public int Value { get; set; } = 5;
+    public int BufferValue { get; set; } = 10;
+
+    public async Task SimulateProgress()
+    {
+        Value += 5;
+        BufferValue += 10;
+
+        do
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            Value += 4;
+            BufferValue += 5;
+            StateHasChanged();
+            await Task.Delay(100);
+
+        } while (Value < 100);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await SimulateProgress();
+
+        await JSRuntime.InvokeVoidAsync("cookieHelper.deleteCookie", "authToken");
+        NavigationManager.NavigateTo("/", true);
+    }
+}
+

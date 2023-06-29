@@ -1,0 +1,53 @@
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager Navigation
+
+
+<AuthorizeView>
+    <Authorized>
+        <MudPaper Class="d-flex flex-column flex-grow-1 align-center w-100 py-4" Elevation="0">
+            <MudAvatar Size="Size.Medium">
+                <MudImage Src="images/logo-mini.png"></MudImage>
+            </MudAvatar>
+            <br />
+            <MudText><b>@userName</b></MudText>
+        </MudPaper>
+    </Authorized>
+    <NotAuthorized>
+        <MudPaper Class="d-flex flex-column flex-grow-1 align-center w-100 py-4" Elevation="0">
+            <MudAvatar Size="Size.Medium">
+                <MudImage Src="images/logo-mini.png"></MudImage>
+            </MudAvatar>
+            <br />
+            <MudText><b>TechChalleng1</b></MudText>
+        </MudPaper>
+    </NotAuthorized>
+</AuthorizeView>
+
+
+@code {
+
+    private string? userName;
+    protected override async Task OnInitializedAsync()
+    {
+        var authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authenticationState.User;
+
+        if (user.Identity?.IsAuthenticated ?? false)
+        {
+            userName = user.Claims?.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? "";
+        }
+    }
+
+    private void BeginLogin()
+    {
+        Navigation.NavigateTo("login");
+    }
+
+    private void BeginLogOut()
+    {
+        Navigation.NavigateTo("/logout");
+    }
+
+
+}

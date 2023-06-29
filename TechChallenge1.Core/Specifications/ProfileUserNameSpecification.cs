@@ -9,6 +9,11 @@ namespace TechChallenge1.Core.Specifications
         {
             Query.
                 Where(u => u.UserName == userName && u.ApplicationUserId != applicationUserId);
+        }        
+        public ProfileUserNameSpecification(Guid applicationUserId)
+        {
+            Query.
+                Where(u => u.ApplicationUserId == applicationUserId);
         }
     }
 }

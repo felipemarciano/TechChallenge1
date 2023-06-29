@@ -1,19 +1,60 @@
 ﻿@inherits LayoutComponentBase
 
-<PageTitle>TechChallenge1.Web</PageTitle>
+<MudThemeProvider @ref="@_mudThemeProvider" Theme="MyCustomTheme" />
+<MudDialogProvider MaxWidth="MaxWidth.Medium" />
+<MudSnackbarProvider />
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+<MudLayout>
+    <MudAppBar Elevation="1">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        <MudLink Href="/" Class="pt-2">
+            <MudImage Src="images/logo.png" Style="max-width: 250px; height: auto;" Alt="Logo" Fluid="true" />
+        </MudLink>
+        <MudSpacer />
+        <NavMenu></NavMenu>
+    </MudAppBar>
+    <MudDrawer @bind-Open="_drawerOpen">
+        <MudPaper Width="240px" Elevation="0" Class="py-1">
+            <AvatarMenu></AvatarMenu>
+        </MudPaper>
+        <MudPaper Width="240px" Elevation="0" Class="py-1">
+            <MudNavMenu Margin="Margin.Normal" Color="Color.Primary">
+                <AuthorizeView>
+                    <Authorized>
+                        <MudNavLink Href="/" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
+                        <MudNavLink Href="/profile" Icon="@Icons.Material.Filled.AccountCircle">Profile</MudNavLink>
+                    </Authorized>
+                    <NotAuthorized>
+                        <MudNavLink Href="/register" IconColor="@Color.Primary" Icon="@Icons.Material.Filled.PersonAddAlt1">Register</MudNavLink>                      
+                    </NotAuthorized>
+                </AuthorizeView>
+            </MudNavMenu>
+        </MudPaper>
+    </MudDrawer>
+    <MudMainContent>
+        @Body
+    </MudMainContent>
+</MudLayout>
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
+@code {
+    private MudThemeProvider? _mudThemeProvider;
+    bool _drawerOpen = true;
 
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+
+    MudTheme MyCustomTheme = new MudTheme()
+        {
+            Palette = new PaletteLight()
+            {
+                AppbarBackground = Colors.Grey.Lighten5,
+                AppbarText = Colors.Grey.Darken3
+            },
+
+            PaletteDark = new PaletteDark()
+            {
+            },
+        };
+}

@@ -6,7 +6,7 @@ namespace TechChallenge1.Infrastructure.Identity;
 
 public class AppIdentityDbContextSeed
 {
-    public static async Task SeedAsync(AppIdentityDbContext identityDbContext, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+    public static async Task SeedAsync(AppIdentityDbContext identityDbContext, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole<Guid>> roleManager)
     {
 
         if (identityDbContext.Database.IsSqlServer())
@@ -14,7 +14,7 @@ public class AppIdentityDbContextSeed
             identityDbContext.Database.Migrate();
         }
 
-        await roleManager.CreateAsync(new IdentityRole(RolesConstants.ADMINISTRATORS));
+        await roleManager.CreateAsync(new IdentityRole<Guid>(RolesConstants.ADMINISTRATORS));
 
         var defaultUser = new ApplicationUser { UserName = "demouser@microsoft.com", Email = "demouser@microsoft.com" };
         await userManager.CreateAsync(defaultUser, AuthorizationConstants.DEFAULT_PASSWORD);

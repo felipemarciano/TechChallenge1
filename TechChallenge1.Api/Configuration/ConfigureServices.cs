@@ -13,12 +13,9 @@ namespace TechChallenge1.Api.Configuration
             IConfiguration configuration)
         {
 
-            // Add DbContext
-            services.AddDbContext<AppIdentityDbContext>(options =>
-                options.UseSqlServer(
-                    configuration.GetConnectionString("DefaultConnection")));
+            Infrastructure.Dependencies.ConfigureServices(configuration, services);
 
-            // Add Identity
+           // Add Identity
             services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<AppIdentityDbContext>()
                 .AddDefaultTokenProviders();

@@ -9,15 +9,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
-
-
 builder.Services.AddHttpContextAccessor();
+
+
 builder.Services.AddScoped<CustomAuthenticationStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
-
 builder.Services.AddHttpClient<AuthenticationService>(client =>
 {
-    client.BaseAddress = new Uri("https://localhost:7289/");
+    client.BaseAddress = new Uri(builder.Configuration["JwtSettings:Api"] ?? "");
+});
+builder.Services.AddHttpClient<ProfileService>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["JwtSettings:Api"] ?? "");
 });
 
 builder.Services.AddAuthentication(options =>
@@ -32,14 +35,12 @@ builder.Services.AddAuthentication(options =>
 })
 .AddJwtBearer();
 
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 

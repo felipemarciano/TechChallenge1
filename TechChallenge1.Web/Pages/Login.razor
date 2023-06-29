@@ -30,7 +30,7 @@
 
             if (!string.IsNullOrEmpty(jwtToken))
             {
-                await CustomAuthenticationStateProvider.SetTokenAsync(jwtToken);
+                CustomAuthenticationStateProvider.SetToken(jwtToken);
 
                 // Armazene o token JWT em um cookie seguro usando IJSRuntime
                 await JSRuntime.InvokeVoidAsync("cookieHelper.setCookie", "authToken", jwtToken, 1);

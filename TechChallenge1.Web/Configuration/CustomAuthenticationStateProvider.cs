@@ -16,8 +16,8 @@ namespace TechChallenge1.Web.Configuration
             _configuration = configuration;
             _httpContextAccessor = httpContextAccessor;
         }
-         
-        public async Task SetTokenAsync(string jwtToken)
+
+        public void SetToken(string jwtToken)
         {
             var identity = new ClaimsIdentity();
 
@@ -28,7 +28,7 @@ namespace TechChallenge1.Web.Configuration
                 ValidateAudience = false,
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSettings:Secret"]))
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSettings:Secret"] ?? ""))
             }, out _);
             var authState = new AuthenticationState(principal);
             NotifyAuthenticationStateChanged(Task.FromResult(authState));
@@ -38,7 +38,7 @@ namespace TechChallenge1.Web.Configuration
         {
             var jwtToken = _httpContextAccessor.HttpContext.Request.Cookies["authToken"];
 
-            if(jwtToken == null)
+            if (jwtToken == null)
             {
                 return Task.FromResult(new AuthenticationState(new ClaimsPrincipal()));
             }
@@ -50,7 +50,7 @@ namespace TechChallenge1.Web.Configuration
                 ValidateAudience = false,
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSettings:Secret"]))
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSettings:Secret"] ?? ""))
             }, out _);
             var authState = new AuthenticationState(principal);
 

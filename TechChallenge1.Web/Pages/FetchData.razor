@@ -1,6 +1,7 @@
 ﻿@page "/fetchdata"
 @using TechChallenge1.Web.Data
 @inject WeatherForecastService ForecastService
+@inject ProfileService ProfileService
 
 <PageTitle>Weather forecast</PageTitle>
 
@@ -39,9 +40,12 @@ else
 
 @code {
     private WeatherForecast[]? forecasts;
+    private ProfileModel? ProfileModel;
 
     protected override async Task OnInitializedAsync()
     {
         forecasts = await ForecastService.GetForecastAsync(DateOnly.FromDateTime(DateTime.Now));
+
+        ProfileModel = await ProfileService.Get();
     }
 }

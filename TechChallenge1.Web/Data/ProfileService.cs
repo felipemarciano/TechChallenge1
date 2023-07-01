@@ -7,7 +7,6 @@ namespace TechChallenge1.Web.Data
         private readonly HttpClient _httpClient;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-
         public ProfileService(HttpClient httpClient, IHttpContextAccessor httpContextAccessor)
         {
             _httpClient = httpClient;
@@ -35,6 +34,18 @@ namespace TechChallenge1.Web.Data
             {
                 return null;
             }            
+        }
+
+        public async Task<bool> CreateUpdatePost(string userName, string biography, string gender)
+        {
+            var result = await _httpClient.PostAsJsonAsync("api/profile", new { UserName = userName, Biography = biography, Gender = gender });
+
+            if (!result.IsSuccessStatusCode)
+            {
+                throw new Exception(await result.Content.ReadAsStringAsync());
+            }
+
+            return result.IsSuccessStatusCode;
         }
     }
 }

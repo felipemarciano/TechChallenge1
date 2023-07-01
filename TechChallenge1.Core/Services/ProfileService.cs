@@ -1,5 +1,4 @@
-﻿using TechChallenge1.Core.Constants;
-using TechChallenge1.Core.Entities;
+﻿using TechChallenge1.Core.Entities;
 using TechChallenge1.Core.Exceptions;
 using TechChallenge1.Core.Interfaces;
 using TechChallenge1.Core.Specifications;
@@ -37,6 +36,22 @@ namespace TechChallenge1.Core.Services
             else
             {
                 await _profileRepository.AddAsync(profile);
+            }
+        }
+
+        public async Task UpdatePictureUriAsync(Guid applicationUserId, string pictureUri)
+        {
+            var profileUserNameSpecification = new ProfileUserNameSpecification(applicationUserId);
+            var profileExisting = await _profileRepository.FirstOrDefaultAsync(profileUserNameSpecification);
+
+            if (profileExisting == null)
+            {
+                throw new ArgumentNullException("Profile not found!");
+            }
+            else
+            {
+                profileExisting.ChangePictureUri(pictureUri);
+                await _profileRepository.UpdateAsync(profileExisting);
             }
         }
     }

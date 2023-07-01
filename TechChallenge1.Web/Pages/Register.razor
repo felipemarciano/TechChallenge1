@@ -23,7 +23,7 @@
                     @bind-Value="_model.ConfirmPassword" For="@(() => _model.ConfirmPassword)" InputType="InputType.Password" />
                 </MudCardContent>
                 <MudCardActions>
-                    <MudButton ButtonType="ButtonType.Submit"  Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Register</MudButton>
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Disabled="_isTaskRunning" Color="Color.Primary" Class="ml-auto">Register</MudButton>
                 </MudCardActions>
             </MudCard>
         </EditForm>
@@ -34,6 +34,7 @@
     RegisterAccountForm _model = new RegisterAccountForm();
     private ValidationMessageStore? _messageStore;
     private EditContext? _editContext;
+    private bool _isTaskRunning = false;
 
     public class RegisterAccountForm
     {
@@ -65,8 +66,9 @@
     {
         try
         {
+            _isTaskRunning = true;
 
-            var success = await AuthenticationService.RegisterAsync(_model.Email, _model.Password);
+            var success = await AuthenticationService.RegisterAsync(_model.Email ?? "", _model.Password ?? "");
 
             if (success)
             {
@@ -85,7 +87,7 @@
         }
         finally
         {
-            StateHasChanged();
+            _isTaskRunning = false;
         }
     }
 }

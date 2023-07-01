@@ -6,5 +6,6 @@ namespace TechChallenge1.Core.Interfaces
     public interface IProfileService
     {
         Task CreateUpdateProfileAsync(Profile profile);
+        Task UpdatePictureUriAsync(Guid applicationUserId, string pictureUri);
     }
 }

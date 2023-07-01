@@ -1,0 +1,95 @@
+﻿@page "/profile"
+@using TechChallenge1.Web.Data
+@using System.ComponentModel.DataAnnotations;
+@inject ProfileService ProfileService
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
+
+@attribute [Authorize]
+
+<PageTitle>Home</PageTitle>
+
+<MudContainer Class="mt-4" MaxWidth="MaxWidth.Medium">
+    <MudItem xs="12">
+        <EditForm EditContext="_editContext" OnValidSubmit="@OnValidSubmit">
+            <MudCard>
+                <MudCardHeader><MudText Typo="Typo.h4">Profile</MudText></MudCardHeader>
+                <MudCardContent>
+                    <DataAnnotationsValidator />
+                    <br />
+                    <MudTextField Label="User Name" Class="mt-3"
+                                  @bind-Value="_model.UserName" For="@(() => _model.UserName)" />
+                    <MudTextField Label="Biography" Class="mt-3"
+                                  @bind-Value="_model.Biography" For="@(() => _model.Biography)" />
+                    <MudSelect @bind-Value="_model.Gender" Label="Gender" Variant="Variant.Filled" AnchorOrigin="Origin.BottomCenter">
+                        <MudSelectItem Value="@("Male")" />
+                        <MudSelectItem Value="@("Female")" />
+                        <MudSelectItem Value="@("Uninformed")" />
+                    </MudSelect>
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Disabled="_isTaskRunning" Color="Color.Primary" Class="ml-auto">Register</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </EditForm>
+    </MudItem>
+</MudContainer>
+
+@code {
+    private ProfileModel? ProfileModel;
+    ProfileModelForm _model = new ProfileModelForm();
+    private ValidationMessageStore? _messageStore;
+    private EditContext? _editContext;
+    private bool _isTaskRunning = false;
+
+    public class ProfileModelForm
+    {
+        public Guid Id { get; set; }
+
+        [Required]
+        public string? UserName { get; set; }
+
+        [Required]
+        public string? Biography { get; set; }
+
+        [Required]
+        public string? Gender { get; set; }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        _editContext = new(_model);
+        _messageStore = new(_editContext);
+
+        ProfileModel = await ProfileService.Get();
+    }
+
+    private async Task OnValidSubmit(EditContext context)
+    {
+        try
+        {
+            _isTaskRunning = true;
+
+            var success = await ProfileService.CreateUpdatePost(_model.UserName, _model.Biography, _model.Gender);
+
+            if (success)
+            {
+
+            }
+            else
+            {
+                _messageStore?.Add(() => _model.UserName , "Failed to change profile");
+            }
+        }
+        catch (Exception ex)
+        {
+            _messageStore?.Add(() => _model.UserName, ex.Message);
+
+            _editContext?.NotifyValidationStateChanged();
+        }
+        finally
+        {
+            _isTaskRunning = false;
+        }
+    }
+}

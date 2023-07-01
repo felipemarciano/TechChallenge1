@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using TechChallenge1.Api.Model;
+using TechChallenge1.Core.Constants;
 using TechChallenge1.Core.Entities;
 using TechChallenge1.Core.Interfaces;
 using TechChallenge1.Core.Specifications;
@@ -55,6 +56,53 @@ namespace TechChallenge1.Api.Controllers
                 PictureUri = profile.PictureUri,
                 UserName = profile.UserName
             });
+        }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Post([FromBody] ProfileRequest profileRequest)
+        {
+            string? userId = User?.FindFirst(ClaimTypes.Name)?.Value;
+
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            await _profileService.CreateUpdateProfileAsync(
+                new Profile(Guid.Parse(userId),
+                                profileRequest.UserName ?? "",
+                                profileRequest.Biography,
+                                string.Empty,
+                                Enum.Parse<EGender>(profileRequest.Gender ?? EGender.NaoInformado.ToString())));
+            return Ok();
+        }
+
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Put([FromBody] ProfileRequest profileRequest)
+        {
+            string? userId = User?.FindFirst(ClaimTypes.Name)?.Value;
+
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            if(profileRequest.PictureUri == null)
+            {
+                throw new Exception("Picture is required!");
+            }
+
+            await _profileService.UpdatePictureUriAsync(Guid.Parse(userId), profileRequest.PictureUri);
+
+            return Ok();
         }
     }
 }

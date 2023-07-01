@@ -25,7 +25,8 @@
                         <MudNavLink Href="/profile" Icon="@Icons.Material.Filled.AccountCircle">Profile</MudNavLink>
                     </Authorized>
                     <NotAuthorized>
-                        <MudNavLink Href="/register" IconColor="@Color.Primary" Icon="@Icons.Material.Filled.PersonAddAlt1">Register</MudNavLink>                      
+                        <MudNavLink Href="/Login" IconColor="@Color.Primary" Icon="@Icons.Material.Filled.Login">Login</MudNavLink>
+                        <MudNavLink Href="/register" Icon="@Icons.Material.Filled.PersonAddAlt1">Register</MudNavLink>                      
                     </NotAuthorized>
                 </AuthorizeView>
             </MudNavMenu>
@@ -51,10 +52,6 @@
             {
                 AppbarBackground = Colors.Grey.Lighten5,
                 AppbarText = Colors.Grey.Darken3
-            },
-
-            PaletteDark = new PaletteDark()
-            {
             },
         };
 }

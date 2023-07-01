@@ -2,8 +2,8 @@
 {
     public enum EGender
     {
-        Masculino,
-        Feminino,
-        NaoInformado
+        Male,
+        Female,
+        Uninformed
     }
 }

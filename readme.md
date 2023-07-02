@@ -6,10 +6,10 @@
 	az group create --name rg-techchallenge1-dev --location eastus2
 	az group deployment create --name Techchallenge1Deployment --resource-group rg-techchallenge1-dev --template-file ./template.json --parameters storageAccountName=sttechchallenge1dev sqlServerName=sqldb-techchallenge1-dev sqlDatabaseName=dbTechChallenge1 webAppName=app-techchallenge1 apiAppName=app-techchallenge1
 
-## Configuração AzureSql
+## ConfiguraÃ§Ã£o AzureSql
 	- https://learn.microsoft.com/en-us/azure/azure-sql/database/network-access-controls-overview?view=azuresql#allow-azure-services
 
-## Metodo Usado de publicação
+## Metodo Usado de publicaÃ§Ã£o
 	- Download do publish profile e realizado publish via visual studio
 
 ## StorageAccount
@@ -26,21 +26,21 @@
 # Prints
 
 	## Api
-	![Api](https://github.com/felipemarciano/TechChallenge1/blob/master/Screenshot api.png)
+	![Api](https://github.com/felipemarciano/TechChallenge1/blob/master/Screenshot_api.png)
 
 	## Register
-	![Register](https://github.com/felipemarciano/TechChallenge1/blob/master/Screenshot register.png)
+	![Register](https://github.com/felipemarciano/TechChallenge1/blob/master/Screenshot_register.png)
 
 	## Login
-	![Login](https://github.com/felipemarciano/TechChallenge1/blob/master/Screenshot login.png)
+	![Login](https://github.com/felipemarciano/TechChallenge1/blob/master/Screenshot_login.png)
 
 	## Index
-	![Index](https://github.com/felipemarciano/TechChallenge1/blob/master/Screenshot index.png)
+	![Index](https://github.com/felipemarciano/TechChallenge1/blob/master/Screenshot_index.png)
 
 	## Profile
-	![Profile](https://github.com/felipemarciano/TechChallenge1/blob/master/Screenshot index.png)
+	![Profile](https://github.com/felipemarciano/TechChallenge1/blob/master/Screenshot_index.png)
 
-# Referências
+# ReferÃªncias
 
 - https://learn.microsoft.com/en-us/cli/azure/
 - https://github.com/dotnet-architecture/eShopOnWeb

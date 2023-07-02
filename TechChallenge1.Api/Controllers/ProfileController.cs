@@ -77,7 +77,7 @@ namespace TechChallenge1.Api.Controllers
                                 profileRequest.UserName ?? "",
                                 profileRequest.Biography,
                                 string.Empty,
-                                Enum.Parse<EGender>(profileRequest.Gender ?? EGender.NaoInformado.ToString())));
+                                Enum.Parse<EGender>(profileRequest.Gender ?? EGender.Uninformed.ToString())));
             return Ok();
         }
 

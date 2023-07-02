@@ -8,7 +8,7 @@ namespace TechChallenge1.Core.Specifications
         public ProfileApplicationUserIdSpecification(Guid applicationUserId)
         {
             Query.
-                Where(u => u.ApplicationUserId != applicationUserId);
+                Where(u => u.ApplicationUserId == applicationUserId);
         }
     }
 }

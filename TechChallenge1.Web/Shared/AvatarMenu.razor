@@ -1,16 +1,25 @@
 ﻿@using Microsoft.AspNetCore.Components.Authorization
-@inject AuthenticationStateProvider AuthenticationStateProvider
+@using TechChallenge1.Web.Data
 @inject NavigationManager Navigation
-
+@inject ProfileService ProfileService
 
 <AuthorizeView>
     <Authorized>
         <MudPaper Class="d-flex flex-column flex-grow-1 align-center w-100 py-4" Elevation="0">
-            <MudAvatar Size="Size.Medium">
-                <MudImage Src="images/logo-mini.png"></MudImage>
-            </MudAvatar>
-            <br />
-            <MudText><b>@userName</b></MudText>
+            <MudButton Variant="Variant.Text">
+                @if (string.IsNullOrWhiteSpace(_model.PictureUri))
+                {
+                    <MudAvatar Size="Size.Large" Color="Color.Default">
+                        <MudIcon Size="Size.Large" Icon="@Icons.Material.Filled.SupervisedUserCircle" />
+                    </MudAvatar>
+                }
+                else
+                {
+                    <MudAvatar Size="Size.Large">
+                        <MudImage Src="@_model.PictureUri"></MudImage>
+                    </MudAvatar>
+                }
+            </MudButton>
         </MudPaper>
     </Authorized>
     <NotAuthorized>
@@ -18,36 +27,17 @@
             <MudAvatar Size="Size.Medium">
                 <MudImage Src="images/logo-mini.png"></MudImage>
             </MudAvatar>
-            <br />
-            <MudText><b>TechChalleng1</b></MudText>
         </MudPaper>
     </NotAuthorized>
 </AuthorizeView>
 
-
 @code {
 
     private string? userName;
+    ProfileModel _model = new ProfileModel();
+
     protected override async Task OnInitializedAsync()
     {
-        var authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        var user = authenticationState.User;
-
-        if (user.Identity?.IsAuthenticated ?? false)
-        {
-            userName = user.Claims?.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? "";
-        }
+        _model = await ProfileService.Get() ?? new();
     }
-
-    private void BeginLogin()
-    {
-        Navigation.NavigateTo("login");
-    }
-
-    private void BeginLogOut()
-    {
-        Navigation.NavigateTo("/logout");
-    }
-
-
 }

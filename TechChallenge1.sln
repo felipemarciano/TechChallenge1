@@ -17,9 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TechChallenge1.Infrastructu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TechChallenge1.Core", "TechChallenge1.Core\TechChallenge1.Core.csproj", "{17A4B291-455B-48DE-A89A-D2D9F8F7E8B9}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "terraform", "terraform", "{76ACB55E-BFE9-4BDF-ADAB-D54E5AB737E6}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "azure", "azure", "{8C96F172-617A-4EFF-974E-CB5C0842DB27}"
 	ProjectSection(SolutionItems) = preProject
-		main.tf = main.tf
+		template.json = template.json
 	EndProjectSection
 EndProject
 Global

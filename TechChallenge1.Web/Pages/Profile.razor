@@ -1,46 +1,50 @@
-﻿@page "/profile"
+﻿@page "/profile/{_showLeaveAlert:bool?}"
 @using TechChallenge1.Web.Data
 @using System.ComponentModel.DataAnnotations;
 @inject ProfileService ProfileService
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JSRuntime
+@inject BlobStorageService BlobStorageService
+@inject GlobalState GlobalState
 
 @attribute [Authorize]
 
 <PageTitle>Home</PageTitle>
 
 <MudContainer Class="mt-4" MaxWidth="MaxWidth.Medium">
-    @if (_showLeaveAlert)
-    {
-        <MudPaper Class="d-flex justify-center flex-grow-1 gap-4 py-2" Elevation="0">
-            <div></div>
-                <MudAlert Severity="Severity.Success" ContentAlignment="HorizontalAlignment.Center" ShowCloseIcon="true" CloseIconClicked="(() => CloseMe(true))">The profile was changed successfully!</MudAlert>
-            <div></div>
-        </MudPaper>
-    }
+
     <MudItem xs="12">
         <EditForm EditContext="_editContext" OnValidSubmit="@OnValidSubmit">
             <MudCard>
                 <MudCardHeader><MudText Typo="Typo.h4">Profile</MudText></MudCardHeader>
                 <MudCardContent>
+                    @if (_showLeaveAlert)
+                    {
+                        <MudPaper Class="d-flex justify-center flex-grow-1 gap-4 py-2" Elevation="0">
+                            <div></div>
+                            <MudAlert Severity="Severity.Success" ContentAlignment="HorizontalAlignment.Center" ShowCloseIcon="true" CloseIconClicked="(() => CloseMe(true))">The profile was changed successfully!</MudAlert>
+                            <div></div>
+                        </MudPaper>
+                    }
                     <DataAnnotationsValidator />
                     <MudPaper Class="d-flex flex-column flex-grow-1 align-center w-100 py-4" Elevation="0">
-                        <MudButton Variant="Variant.Text">
-                            <MudBadge Color="Color.Info" Icon="@Icons.Material.Filled.Edit" Overlap="true" Bordered="true">
-                                @if (string.IsNullOrWhiteSpace(_model.PictureUri))
-                                {
-                                    <MudAvatar Size="Size.Large" Color="Color.Default">
-                                        <MudIcon Size="Size.Large" Icon="@Icons.Material.Filled.SupervisedUserCircle" />
-                                    </MudAvatar>
-                                }
-                                else
-                                {
-                                    <MudAvatar Size="Size.Large">
-                                        <MudImage Src="@_model.PictureUri"></MudImage>
-                                    </MudAvatar>
-                                }
-                            </MudBadge>
-                        </MudButton>
+
+                        @if (string.IsNullOrWhiteSpace(_model.PictureUri))
+                        {
+                            <MudAvatar Size="Size.Large" Color="Color.Default">
+                                <MudIcon Size="Size.Large" Icon="@Icons.Material.Filled.SupervisedUserCircle" />
+                            </MudAvatar>
+                        }
+                        else
+                        {
+                            <MudAvatar Size="Size.Large">
+                                <MudImage Src="@_model.PictureUri"></MudImage>
+                            </MudAvatar>
+                        }
+                        <br />
+                        <br />
+                        <InputFile OnChange="UploadFile">
+                        </InputFile>
                     </MudPaper>
                     <br />
                     <MudTextField Label="User Name" Class="mt-3"
@@ -66,7 +70,9 @@
     private ValidationMessageStore? _messageStore;
     private EditContext? _editContext;
     private bool _isTaskRunning = false;
-    private bool _showLeaveAlert = false;
+
+    [Parameter]
+    public bool _showLeaveAlert { get; set; } = false;
 
     public class ProfileModelForm
     {
@@ -110,22 +116,53 @@
         }
     }
 
+    private async Task UploadFile(InputFileChangeEventArgs e)
+    {
+        try
+        {
+            _isTaskRunning = true;
+
+            var file = e.File;
+            if (file != null)
+            {
+                var pictureUri = await BlobStorageService.UploadFileToBlobAsync(file);
+
+                _model.PictureUri = pictureUri;
+            }
+        }
+        catch (Exception ex)
+        {
+            _messageStore?.Add(() => _model.UserName, ex.Message);
+
+            _editContext?.NotifyValidationStateChanged();
+        }
+        finally
+        {
+            _isTaskRunning = false;
+        }
+    }
+
+
     private async Task OnValidSubmit(EditContext context)
     {
         try
         {
             _isTaskRunning = true;
 
-            var success = await ProfileService.CreateUpdatePost(_model.UserName, _model.Biography, _model.Gender);
+            var success = await ProfileService.CreateUpdatePost(_model.UserName, _model.Biography, _model.PictureUri, _model.Gender);
 
             if (success)
             {
-                _showLeaveAlert = true;
+                GlobalState.PictureUri = _model.PictureUri;
+
+                NavigationManager.NavigateTo("/profile/true", true);
             }
             else
             {
                 _messageStore?.Add(() => _model.UserName, "Failed to change profile");
             }
+
+
         }
         catch (Exception ex)
         {

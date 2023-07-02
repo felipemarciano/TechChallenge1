@@ -2,12 +2,13 @@
 @using TechChallenge1.Web.Data
 @inject NavigationManager Navigation
 @inject ProfileService ProfileService
+@inject GlobalState GlobalState
 
 <AuthorizeView>
     <Authorized>
         <MudPaper Class="d-flex flex-column flex-grow-1 align-center w-100 py-4" Elevation="0">
             <MudButton Variant="Variant.Text">
-                @if (string.IsNullOrWhiteSpace(_model.PictureUri))
+                @if (string.IsNullOrWhiteSpace(GlobalState.PictureUri))
                 {
                     <MudAvatar Size="Size.Large" Color="Color.Default">
                         <MudIcon Size="Size.Large" Icon="@Icons.Material.Filled.SupervisedUserCircle" />
@@ -16,7 +17,7 @@
                 else
                 {
                     <MudAvatar Size="Size.Large">
-                        <MudImage Src="@_model.PictureUri"></MudImage>
+                        <MudImage Src="@GlobalState.PictureUri"></MudImage>
                     </MudAvatar>
                 }
             </MudButton>
@@ -39,5 +40,7 @@
     protected override async Task OnInitializedAsync()
     {
         _model = await ProfileService.Get() ?? new();
+
+        GlobalState.PictureUri = _model.PictureUri ?? "";
     }
 }

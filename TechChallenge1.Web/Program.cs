@@ -23,6 +23,9 @@ builder.Services.AddHttpClient<ProfileService>(client =>
 {
     client.BaseAddress = new Uri(builder.Configuration["JwtSettings:Api"] ?? "");
 });
+builder.Services.Configure<BlobStorageSettings>(builder.Configuration.GetSection("AzureBlobStorage"));
+builder.Services.AddSingleton<GlobalState>();
+builder.Services.AddSingleton<BlobStorageService>();
 
 builder.Services.AddAuthentication(options =>
 {

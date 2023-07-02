@@ -33,12 +33,24 @@ namespace TechChallenge1.Web.Data
             else
             {
                 return null;
-            }            
+            }
         }
 
-        public async Task<bool> CreateUpdatePost(string userName, string biography, string gender)
+        public async Task<bool> CreateUpdatePost(string userName, string biography, string pictureUri, string gender)
         {
-            var result = await _httpClient.PostAsJsonAsync("api/profile", new { UserName = userName, Biography = biography, Gender = gender });
+            var result = await _httpClient.PostAsJsonAsync("api/profile", new { UserName = userName, Biography = biography, PictureUri = pictureUri, Gender = gender });
+
+            if (!result.IsSuccessStatusCode)
+            {
+                throw new Exception(await result.Content.ReadAsStringAsync());
+            }
+
+            return result.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> UpdatePictureUri(string pictureUri)
+        {
+            var result = await _httpClient.PutAsJsonAsync("api/profile", new { PictureUri = pictureUri });
 
             if (!result.IsSuccessStatusCode)
             {

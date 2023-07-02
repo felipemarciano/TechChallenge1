@@ -65,20 +65,27 @@ namespace TechChallenge1.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Post([FromBody] ProfileRequest profileRequest)
         {
-            string? userId = User?.FindFirst(ClaimTypes.Name)?.Value;
-
-            if (userId == null)
+            try
             {
-                return Unauthorized();
-            }
+                string? userId = User?.FindFirst(ClaimTypes.Name)?.Value;
 
-            await _profileService.CreateUpdateProfileAsync(
-                new Profile(Guid.Parse(userId),
-                                profileRequest.UserName ?? "",
-                                profileRequest.Biography,
-                                string.Empty,
-                                Enum.Parse<EGender>(profileRequest.Gender ?? EGender.Uninformed.ToString())));
-            return Ok();
+                if (userId == null)
+                {
+                    return Unauthorized();
+                }
+
+                await _profileService.CreateUpdateProfileAsync(
+                    new Profile(Guid.Parse(userId),
+                                    profileRequest.UserName ?? "",
+                                    profileRequest.Biography,
+                                    profileRequest.PictureUri ?? "",
+                                    Enum.Parse<EGender>(profileRequest.Gender ?? EGender.Uninformed.ToString())));
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut]
@@ -88,21 +95,28 @@ namespace TechChallenge1.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Put([FromBody] ProfileRequest profileRequest)
         {
-            string? userId = User?.FindFirst(ClaimTypes.Name)?.Value;
-
-            if (userId == null)
+            try
             {
-                return Unauthorized();
-            }
+                string? userId = User?.FindFirst(ClaimTypes.Name)?.Value;
 
-            if(profileRequest.PictureUri == null)
+                if (userId == null)
+                {
+                    return Unauthorized();
+                }
+
+                if (profileRequest.PictureUri == null)
+                {
+                    throw new Exception("Picture is required!");
+                }
+
+                await _profileService.UpdatePictureUriAsync(Guid.Parse(userId), profileRequest.PictureUri);
+
+                return Ok();
+            }
+            catch (Exception ex)
             {
-                throw new Exception("Picture is required!");
+                return BadRequest(ex.Message);
             }
-
-            await _profileService.UpdatePictureUriAsync(Guid.Parse(userId), profileRequest.PictureUri);
-
-            return Ok();
         }
     }
 }

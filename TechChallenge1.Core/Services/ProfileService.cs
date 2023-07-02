@@ -31,6 +31,9 @@ namespace TechChallenge1.Core.Services
             {
                 profileExisting.ChangeProfile(profile.UserName, profile.Biography, profile.Gender);
 
+                if(!string.IsNullOrEmpty(profile.PictureUri))
+                    profileExisting.ChangePictureUri(profile.PictureUri);
+
                 await _profileRepository.UpdateAsync(profileExisting);
             }
             else

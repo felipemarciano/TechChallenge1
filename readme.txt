@@ -14,6 +14,7 @@
 	Download do publish prolife e realizado publish via visual studio
 
 #Referências
+https://learn.microsoft.com/en-us/cli/azure/
 https://github.com/dotnet-architecture/eShopOnWeb
 https://github.com/ardalis/CleanArchitecture
 https://learn.microsoft.com/en-us/aspnet/core/blazor/?view=aspnetcore-7.0#blazor-server

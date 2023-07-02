@@ -14,10 +14,10 @@
 	Download do publish prolife e realizado publish via visual studio
 
 # Referências
-https://learn.microsoft.com/en-us/cli/azure/
-https://github.com/dotnet-architecture/eShopOnWeb
-https://github.com/ardalis/CleanArchitecture
-https://learn.microsoft.com/en-us/aspnet/core/blazor/?view=aspnetcore-7.0#blazor-server
-https://learn.microsoft.com/pt-br/aspnet/core/security/authentication/identity?view=aspnetcore-7.0&tabs=visual-studio
-https://www.mudblazor.com/docs/overview
-https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming
+- https://learn.microsoft.com/en-us/cli/azure/
+- https://github.com/dotnet-architecture/eShopOnWeb
+- https://learn.microsoft.com/pt-br/aspnet/core/security/authentication/identity?view=aspnetcore-7.0&tabs=visual-studio
+- https://github.com/ardalis/CleanArchitecture
+- https://learn.microsoft.com/en-us/aspnet/core/blazor/?view=aspnetcore-7.0#blazor-server
+- https://www.mudblazor.com/docs/overview
+- https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming

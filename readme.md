@@ -23,7 +23,25 @@
 	dotnet ef migrations add {Name} -c AppIdentityDbContext --project .\TechChallenge1.Infrastructure\TechChallenge1.Infrastructure.csproj --startup-project .\TechChallenge1.Api\TechChallenge1.Api.csproj --output-dir .\Identity\Migrations
 	dotnet ef migrations add {Name} -c TechDbContext --project .\TechChallenge1.Infrastructure\TechChallenge1.Infrastructure.csproj --startup-project .\TechChallenge1.Api\TechChallenge1.Api.csproj --output-dir .\Data\Migrations\TechDb
 
+# Prints
+
+	## Api
+	![Api](https://github.com/felipemarciano/TechChallenge1/blob/master/Screenshot api.png)
+
+	## Register
+	![Register](https://github.com/felipemarciano/TechChallenge1/blob/master/Screenshot register.png)
+
+	## Login
+	![Login](https://github.com/felipemarciano/TechChallenge1/blob/master/Screenshot login.png)
+
+	## Index
+	![Index](https://github.com/felipemarciano/TechChallenge1/blob/master/Screenshot index.png)
+
+	## Profile
+	![Profile](https://github.com/felipemarciano/TechChallenge1/blob/master/Screenshot index.png)
+
 # Referências
+
 - https://learn.microsoft.com/en-us/cli/azure/
 - https://github.com/dotnet-architecture/eShopOnWeb
 - https://learn.microsoft.com/pt-br/aspnet/core/security/authentication/identity?view=aspnetcore-7.0&tabs=visual-studio

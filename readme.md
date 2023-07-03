@@ -42,7 +42,7 @@
 
 ## Profile
 
-![Profile](https://raw.githubusercontent.com/felipemarciano/TechChallenge1/master/Screenshot_index.png)
+![Profile](https://raw.githubusercontent.com/felipemarciano/TechChallenge1/master/Screenshot_profile.png)
 
 # Referências
 

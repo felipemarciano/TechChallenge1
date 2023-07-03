@@ -25,20 +25,20 @@
 
 # Prints
 
-	## Api
-	![Api](https://github.com/felipemarciano/TechChallenge1/blob/master/Screenshot api.png)
+## Api
+![Api](https://github.com/felipemarciano/TechChallenge1/blob/master/Screenshot api.png)
 
-	## Register
-	![Register](https://github.com/felipemarciano/TechChallenge1/blob/master/Screenshot register.png)
+## Register
+![Register](https://github.com/felipemarciano/TechChallenge1/blob/master/Screenshot register.png)
 
-	## Login
-	![Login](https://github.com/felipemarciano/TechChallenge1/blob/master/Screenshot login.png)
+## Login
+![Login](https://github.com/felipemarciano/TechChallenge1/blob/master/Screenshot login.png)
 
-	## Index
-	![Index](https://github.com/felipemarciano/TechChallenge1/blob/master/Screenshot index.png)
+## Index
+![Index](https://github.com/felipemarciano/TechChallenge1/blob/master/Screenshot index.png)
 
-	## Profile
-	![Profile](https://github.com/felipemarciano/TechChallenge1/blob/master/Screenshot index.png)
+## Profile
+![Profile](https://github.com/felipemarciano/TechChallenge1/blob/master/Screenshot index.png)
 
 # Referências
 

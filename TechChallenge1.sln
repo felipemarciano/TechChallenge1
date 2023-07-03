@@ -22,13 +22,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "azure", "azure", "{8C96F172
 		template.json = template.json
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{54340BDC-A5AD-45F2-9A5B-AA55158813A0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "prints", "prints", "{54340BDC-A5AD-45F2-9A5B-AA55158813A0}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\..\OneDrive\Pictures\Screenshot api.png = ..\..\..\OneDrive\Pictures\Screenshot api.png
-		..\..\..\OneDrive\Pictures\Screenshot index.png = ..\..\..\OneDrive\Pictures\Screenshot index.png
-		..\..\..\OneDrive\Pictures\Screenshot login.png = ..\..\..\OneDrive\Pictures\Screenshot login.png
-		..\..\..\OneDrive\Pictures\Screenshot profile.png = ..\..\..\OneDrive\Pictures\Screenshot profile.png
-		..\..\..\OneDrive\Pictures\Screenshot register.png = ..\..\..\OneDrive\Pictures\Screenshot register.png
+		..\..\..\OneDrive\Pictures\Screenshot_api.png = ..\..\..\OneDrive\Pictures\Screenshot_api.png
+		..\..\..\OneDrive\Pictures\Screenshot_register.png = ..\..\..\OneDrive\Pictures\Screenshot_register.png
+		..\..\..\OneDrive\Pictures\Screenshot_index.png = ..\..\..\OneDrive\Pictures\Screenshot_index.png
+		..\..\..\OneDrive\Pictures\Screenshot_login.png = ..\..\..\OneDrive\Pictures\Screenshot_login.png
+		..\..\..\OneDrive\Pictures\Screenshot_profile.png = ..\..\..\OneDrive\Pictures\Screenshot_profile.png
 	EndProjectSection
 EndProject
 Global
